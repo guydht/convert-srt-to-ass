@@ -32,7 +32,7 @@ function sortStartTime(a: any, b: any) {
 /** Parse SRT into something actually usable. Also replaces SRT tags by ASS tags */
 export function parseSRT(srt: string): {startTime: string, endTime: string, text: string}[] {
 	// Windows' CRLFs are a pain, please kill them.
-	const rawArr = srt.replaceAll('\r', '').split('\n');
+	const rawArr = srt.replace(/\r/g, '').split('\n');
 	const ass = [];
 	let subSegment = {
 		startTime: 0,
@@ -48,8 +48,8 @@ export function parseSRT(srt: string): {startTime: string, endTime: string, text
 			continue;
 		}
 		if (line.match(/\d+:\d\d:\d\d,\d\d\d --> \d+:\d\d:\d\d,\d\d\d/)) {
-			const startTime = line.split(' --> ')[0].replaceAll(',','.');
-			const endTime = line.split(' --> ')[1].replaceAll(',','.');
+			const startTime = line.split(' --> ')[0].replace(/,/g,'.');
+			const endTime = line.split(' --> ')[1].replace(/,/g,'.');
 			// Let's convert those to miliseconds because we'll need to add the 1s delay so lines appear a little earlier than expected.
 			subSegment.startTime = AssToMs(startTime);
 			subSegment.endTime = AssToMs(endTime);

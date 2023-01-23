@@ -11,7 +11,7 @@ export function msToAss(ms) {
     return `${hourStr}:${minStr}:${secStr}.${milStr.substr(0, 2)}`;
 }
 export function AssToMs(time) {
-    const text = time.replaceAll(',', '.');
+    const text = time.replace(/,/g, '.');
     const [hours, minutes, seconds] = text.split('.')[0].split(':');
     const miliseconds = text.split('.')[1];
     return +miliseconds + (+seconds * 1000) + (+minutes * 60 * 1000) + (+hours * 60 * 60 * 1000);

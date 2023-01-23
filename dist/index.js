@@ -30,7 +30,7 @@ function sortStartTime(a, b) {
     return 0;
 }
 export function parseSRT(srt) {
-    const rawArr = srt.replaceAll('\r', '').split('\n');
+    const rawArr = srt.replace(/\r/g, '').split('\n');
     const ass = [];
     let subSegment = {
         startTime: 0,
@@ -45,8 +45,8 @@ export function parseSRT(srt) {
             continue;
         }
         if (line.match(/\d+:\d\d:\d\d,\d\d\d --> \d+:\d\d:\d\d,\d\d\d/)) {
-            const startTime = line.split(' --> ')[0].replaceAll(',', '.');
-            const endTime = line.split(' --> ')[1].replaceAll(',', '.');
+            const startTime = line.split(' --> ')[0].replace(/,/g, '.');
+            const endTime = line.split(' --> ')[1].replace(/,/g, '.');
             subSegment.startTime = AssToMs(startTime);
             subSegment.endTime = AssToMs(endTime);
             continue;
