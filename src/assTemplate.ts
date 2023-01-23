@@ -2,10 +2,6 @@ export const scriptInfo = {
 	section: 'Script Info',
 	body: [
 		{
-			type: 'comment',
-			value: 'Converted using srt2ass : https://github.com/AxelTerizaki/srt2ass'
-		},
-		{
 			key: 'Title',
 			value: ''
 		},
@@ -28,7 +24,7 @@ export const scriptInfo = {
 	]
 };
 
-export const styles = {
+export const getStyles = () => ({
 	section: 'V4+ Styles',
 	body: [
 		{
@@ -88,9 +84,9 @@ export const styles = {
 			}
 		}
 	]
-};
+});
 
-export const events = {
+export const getEvents = () => ({
 	section: 'Events',
 	body: [
 		{
@@ -109,9 +105,9 @@ export const events = {
 			]
 		}
 	]
-};
+});
 
-export const dialogue = {
+export const getDialogue = () => ({
 	key: 'Dialogue',
 	value: {
 		Layer: '1',
@@ -125,7 +121,7 @@ export const dialogue = {
 		Effect: '',
 		Text: ''
 	}
-};
+});
 
 export const dialogueScript = '{\\fad(90,20)\\k90}';
 export const commentScript = '{\\k90}';

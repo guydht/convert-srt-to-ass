@@ -19,10 +19,6 @@ export function AssToMs(time: string): number {
 	return +miliseconds + (+seconds * 1000) + (+minutes * 60 * 1000) + (+hours * 60 * 60 * 1000);
 }
 
-export function clone(a: any) {
-	return JSON.parse(JSON.stringify(a));
-}
-
 export function convertSRTTags(text: string): string {
 	return text
 		.replace(/<b>|{b}/g, '{\\b1}')

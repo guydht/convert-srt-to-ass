@@ -1,4 +1,4 @@
-import { AssToMs, clone, convertSRTTags, msToAss } from './utils.js';
+import { AssToMs, convertSRTTags, msToAss } from './utils.js';
 import stringify from 'ass-stringify';
 import * as ass from './assTemplate.js';
 function generateASSLine(line, styles) {
@@ -6,8 +6,8 @@ function generateASSLine(line, styles) {
     if (startMs < 0)
         startMs = 0;
     const stopMs = +line.endTime + 100;
-    const dialogue = clone(ass.dialogue);
-    const comment = clone(ass.dialogue);
+    const dialogue = ass.getDialogue();
+    const comment = ass.getDialogue();
     dialogue.value.Start = comment.value.Start = msToAss(startMs);
     dialogue.value.End = comment.value.End = msToAss(stopMs);
     dialogue.value.Text = ass.dialogueScript + line.text;
@@ -75,20 +75,20 @@ export function convertToASS(text) {
     const sub = parseSRT(text);
     const dialogues = [];
     const comments = [];
-    const styles = clone(ass.styles);
-    const script = clone(ass.dialogue);
+    const styles = ass.getStyles();
+    const script = ass.getDialogue();
     script.value.Effect = ass.scriptFX;
     script.value.Text = ass.script;
     script.key = 'Comment';
     comments.push(script);
     for (const line of sub) {
         const ASSLines = generateASSLine(line, styles);
-        comments.push(clone(ASSLines.comment));
-        dialogues.push(clone(ASSLines.dialogue));
+        comments.push(ASSLines.comment);
+        dialogues.push(ASSLines.dialogue);
     }
     comments.sort(sortStartTime);
     dialogues.sort(sortStartTime);
-    const events = clone(ass.events);
+    const events = ass.getEvents();
     events.body = events.body.concat(comments, dialogues);
     return stringify([ass.scriptInfo, styles, events]);
 }
