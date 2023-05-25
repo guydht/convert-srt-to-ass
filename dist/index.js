@@ -11,7 +11,7 @@ function generateASSLine(line, styles) {
     dialogue.value.Start = comment.value.Start = msToAss(startMs);
     dialogue.value.End = comment.value.End = msToAss(stopMs);
     dialogue.value.Text = ass.dialogueScript + line.text;
-    dialogue.value.Effect = 'karaoke';
+    dialogue.value.Effect = '';
     dialogue.value.Style = styles.body[1].value.Name;
     comment.value.Text = ass.commentScript + line.text;
     comment.value.Effect = 'fx';
@@ -52,7 +52,7 @@ export function parseSRT(srt) {
             continue;
         }
         if (line === '') {
-            subSegment.text = sub.join('\n');
+            subSegment.text = sub.join('\\n');
             ass.push(subSegment);
             subSegment = {
                 startTime: 0,
