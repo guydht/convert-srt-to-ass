@@ -52,7 +52,7 @@ export function parseSRT(srt) {
             continue;
         }
         if (line === '') {
-            subSegment.text = sub.join('\N');
+            subSegment.text = sub.join('\n');
             ass.push(subSegment);
             subSegment = {
                 startTime: 0,
@@ -66,7 +66,7 @@ export function parseSRT(srt) {
         sub.push(convertSRTTags(line));
     }
     if (insideSubSegment) {
-        subSegment.text = sub.join('\\N');
+        subSegment.text = sub.join('\\n');
         ass.push(subSegment);
     }
     return ass;
