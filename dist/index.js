@@ -2,24 +2,17 @@ import { AssToMs, convertSRTTags, msToAss } from './utils.js';
 import stringify from 'ass-stringify';
 import * as ass from './assTemplate.js';
 function generateASSLine(line, styles) {
-    let startMs = +line.startTime - 1000;
+    let startMs = line.startTime;
     if (startMs < 0)
         startMs = 0;
-    const stopMs = +line.endTime + 100;
+    const stopMs = line.endTime;
     const dialogue = ass.getDialogue();
-    const comment = ass.getDialogue();
-    dialogue.value.Start = comment.value.Start = msToAss(startMs);
-    dialogue.value.End = comment.value.End = msToAss(stopMs);
-    dialogue.value.Text = ass.dialogueScript + line.text;
-    dialogue.value.Effect = '';
+    dialogue.value.Start = msToAss(startMs);
+    dialogue.value.End = msToAss(stopMs);
+    dialogue.value.Text = line.text;
     dialogue.value.Style = styles.body[1].value.Name;
-    comment.value.Text = ass.commentScript + line.text;
-    comment.value.Effect = 'fx';
-    comment.key = 'Comment';
-    comment.value.Style = styles.body[1].value.Name;
     return {
         dialogue,
-        comment
     };
 }
 function sortStartTime(a, b) {
@@ -74,22 +67,14 @@ export function parseSRT(srt) {
 export function convertToASS(text) {
     const sub = parseSRT(text);
     const dialogues = [];
-    const comments = [];
     const styles = ass.getStyles();
-    const script = ass.getDialogue();
-    script.value.Effect = ass.scriptFX;
-    script.value.Text = ass.script;
-    script.key = 'Comment';
-    comments.push(script);
     for (const line of sub) {
         const ASSLines = generateASSLine(line, styles);
-        comments.push(ASSLines.comment);
         dialogues.push(ASSLines.dialogue);
     }
-    comments.sort(sortStartTime);
     dialogues.sort(sortStartTime);
     const events = ass.getEvents();
-    events.body = events.body.concat(comments, dialogues);
+    events.body = events.body.concat(dialogues);
     return stringify([ass.scriptInfo, styles, events]);
 }
 //# sourceMappingURL=index.js.map

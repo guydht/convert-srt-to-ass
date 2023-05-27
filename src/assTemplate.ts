@@ -123,8 +123,8 @@ export const getDialogue = () => ({
 	}
 });
 
-export const dialogueScript = '{\\fad(90,20)\\k90}';
-export const commentScript = '{\\k90}';
+export const dialogueScript = '';
+export const commentScript = '';
 export const scriptFX = 'template pre-line all keeptags';
-export const script = '!retime("line",$start < 0 and -$start or -0,200)!{!$start < 0 and "\\\\k" .. ($start/10) or "\\\\k0"!\\fad(!$start < 0 and $start or 300!,200)}';
+export const script = '';
 

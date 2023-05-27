@@ -27,7 +27,6 @@ export function convertSRTTags(text: string): string {
 		.replace(/<\/i>|{\/i}/g, '{\\i0}')
 		.replace(/<u>|{u}/g, '{\\u1}')
 		.replace(/<\/u>|{\/u}/g, '{\\u0}')
-		.replace(/a\d/g, '') // Alignement is ignored for now
 		.replace(/<font color="\D+">/g, '') // Font color is ignored for now
 		.replace(/<font>/g, '');
 }
